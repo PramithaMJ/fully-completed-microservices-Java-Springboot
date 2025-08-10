@@ -1,0 +1,117 @@
+{{- if .Values.order.enabled }}
+{{- $serviceName := .Values.order.name }}
+{{- $slot := include "ecommerce.slot" . }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $serviceName }}-{{ $slot }}
+  labels:
+    {{- include "ecommerce.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $serviceName }}
+    deployment.kubernetes.io/slot: {{ $slot }}
+spec:
+  replicas: {{ .Values.order.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      {{- include "ecommerce.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ $serviceName }}
+      deployment.kubernetes.io/slot: {{ $slot }}
+  template:
+    metadata:
+      labels:
+        {{- include "ecommerce.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: {{ $serviceName }}
+        deployment.kubernetes.io/slot: {{ $slot }}
+    spec:
+      containers:
+      - name: {{ $serviceName }}
+        image: "{{ .Values.order.image.repository }}:{{ .Values.order.image.tag }}"
+        imagePullPolicy: {{ .Values.order.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.order.service.port }}
+          name: http
+        env:
+        {{- include "ecommerce.envVars" . | nindent 8 }}
+        - name: SERVER_PORT
+          value: "{{ .Values.order.service.port }}"
+        {{- if .Values.order.circuitBreaker.enabled }}
+        - name: RESILIENCE4J_CIRCUITBREAKER_FAILURE_RATE_THRESHOLD
+          value: "{{ .Values.order.circuitBreaker.failureRateThreshold }}"
+        - name: RESILIENCE4J_CIRCUITBREAKER_WAIT_DURATION_IN_OPEN_STATE
+          value: "{{ .Values.order.circuitBreaker.waitDurationInOpenState }}"
+        - name: RESILIENCE4J_CIRCUITBREAKER_SLIDING_WINDOW_SIZE
+          value: "{{ .Values.order.circuitBreaker.slidingWindowSize }}"
+        {{- end }}
+        {{- if .Values.order.saga.enabled }}
+        - name: SAGA_RETRY_ATTEMPTS
+          value: "{{ .Values.order.saga.retryAttempts }}"
+        - name: SAGA_COMPENSATION_TIMEOUT
+          value: "{{ .Values.order.saga.compensationTimeout }}"
+        {{- end }}
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: http
+          initialDelaySeconds: {{ .Values.healthChecks.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.healthChecks.livenessProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.healthChecks.livenessProbe.timeoutSeconds }}
+          failureThreshold: {{ .Values.healthChecks.livenessProbe.failureThreshold }}
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: http
+          initialDelaySeconds: {{ .Values.healthChecks.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.healthChecks.readinessProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.healthChecks.readinessProbe.timeoutSeconds }}
+          failureThreshold: {{ .Values.healthChecks.readinessProbe.failureThreshold }}
+        resources:
+          {{- toYaml .Values.order.resources | nindent 10 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "ecommerce.serviceName" (dict "serviceName" $serviceName "Values" .Values) }}
+  labels:
+    {{- include "ecommerce.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $serviceName }}
+spec:
+  type: {{ .Values.order.service.type }}
+  ports:
+  - port: {{ .Values.order.service.port }}
+    targetPort: http
+    protocol: TCP
+    name: http
+  selector:
+    {{- include "ecommerce.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $serviceName }}
+    deployment.kubernetes.io/slot: {{ $slot }}
+{{- if .Values.order.autoscaling.enabled }}
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ $serviceName }}-{{ $slot }}
+  labels:
+    {{- include "ecommerce.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $serviceName }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ $serviceName }}-{{ $slot }}
+  minReplicas: {{ .Values.order.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.order.autoscaling.maxReplicas }}
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: {{ .Values.order.autoscaling.targetCPUUtilizationPercentage }}
+{{- end }}
+{{- end }}

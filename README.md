@@ -1,4 +1,50 @@
-# Fully Completed Microservices Project
+# Complete Microservices Architecture with Advanced Patterns
+
+[![Java](https://img.shields.io/badge/Java-17-orange)](https://www.oracle.com/java/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.5-brightgreen)](https://spring.io/projects/spring-boot)
+[![Spring Cloud](https://img.shields.io/badge/Spring%20Cloud-2023.0.1-blue)](https://spring.io/projects/spring-cloud)
+[![Kubernetes](https://img.shields.io/badge/Kubernetes-1.28+-blue)](https://kubernetes.io/)
+[![Docker](https://img.shields.io/badge/Docker-24.0+-blue)](https://www.docker.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+> A comprehensive, production-ready microservices implementation featuring **Circuit Breaker Pattern**, **Saga Pattern**, and **Blue-Green Deployment** with Kubernetes orchestration.
+
+## Project Overview
+
+This project demonstrates enterprise-grade microservices architecture patterns through a complete e-commerce platform implementation. It showcases advanced distributed systems patterns essential for building resilient, scalable applications.
+
+### Key Features
+
+- ✅ **6 Production-Ready Microservices**
+- ✅ **Circuit Breaker Pattern** with Resilience4j
+- ✅ **Saga Pattern** for distributed transactions
+- ✅ **Blue-Green Deployment** with Kubernetes
+- ✅ **Event-Driven Architecture** with Kafka
+- ✅ **Distributed Tracing** with Zipkin
+- ✅ **Interactive Learning Platform**
+- ✅ **Zero-Downtime Deployments**
+
+## Advanced Patterns Implemented
+
+### Circuit Breaker Pattern
+
+- **Technology**: Resilience4j
+- **Implementation**: All inter-service communications
+- **Features**: Configurable thresholds, automatic recovery, fallback strategies
+- **Monitoring**: Prometheus metrics integration
+
+### Saga Pattern (Orchestration)
+
+- **Coordinator**: OrderSagaOrchestrator
+- **State Storage**: MongoDB
+- **Event Bus**: Apache Kafka
+- **Features**: Automatic compensation, timeout handling, retry mechanisms
+
+### Blue-Green Deployment
+
+- **Platform**: Kubernetes with Helm
+- **Features**: Zero-downtime deployment, instant rollback, canary support
+- **Automation**: Custom deployment scripts with health checks
 
 ## Overview
 
@@ -7,35 +53,36 @@ This repository contains a collection of fully completed microservices built wit
 ## Microservices Description
 
 1. **Config Server**
+
    - Provides centralized configuration for all microservices.
    - Uses Spring Cloud Config Server.
-
 2. **Customer Service**
+
    - Manages customer data and operations.
    - Integrated with Eureka Discovery.
-
 3. **Discovery Service**
+
    - Service registry using Netflix Eureka.
    - Enables service discovery for other microservices.
-
 4. **Gateway Service**
+
    - API Gateway for routing requests to appropriate microservices.
    - Uses Spring Cloud Gateway.
    - Includes distributed tracing and circuit breaker.
-
 5. **Notification Service**
+
    - Handles notifications and alerts.
    - Uses Kafka for messaging.
-
 6. **Order Service**
+
    - Manages orders and their statuses.
    - Integrated with Eureka Discovery.
-
 7. **Payment Service**
+
    - Processes payments.
    - Uses Eureka Discovery and Zipkin for tracing.
-
 8. **Product Service**
+
    - Manages product information.
    - Integrated with Eureka Discovery.
 
@@ -57,23 +104,23 @@ This repository contains a collection of fully completed microservices built wit
 ## Running the Microservices
 
 1. **Clone the repository**
+
    ```sh
    git clone https://github.com/PramithaMJ/fully-completed-microservices.git
    cd fully-completed-microservices
    ```
-
 2. **Start Config Server**
+
    ```sh
    cd config-server
    mvn spring-boot:run
    ```
-
 3. **Start Discovery Service**
+
    ```sh
    cd discovery
    mvn spring-boot:run
    ```
-
 4. **Start Other Microservices**
    Start the remaining microservices in any order. Ensure they are configured to register with the Discovery Service.
 
@@ -119,10 +166,11 @@ https://pramithamj.live
 <!--
 buy me a coffee
 -->
+
 ## Donation
 
 ***If you like what I do, maybe consider buying me a coffee***
 
 <a href="https://buymeacoffee.com/lpramithamm"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 35px !important; width: 120px !important;"></a>
 
-***
+---

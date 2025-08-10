@@ -1,0 +1,205 @@
+{{- if .Values.monitoring.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  labels:
+    {{- include "ecommerce.labels" . | nindent 4 }}
+    app.kubernetes.io/component: monitoring
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
+    
+    rule_files:
+      - "circuit_breaker_rules.yml"
+      - "saga_pattern_rules.yml"
+    
+    scrape_configs:
+      # Discovery Service
+      - job_name: 'discovery-service'
+        kubernetes_sd_configs:
+          - role: endpoints
+            namespaces:
+              names:
+                - {{ .Release.Namespace }}
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_service_name]
+            action: keep
+            regex: discovery-service.*
+          - source_labels: [__meta_kubernetes_endpoint_port_name]
+            action: keep
+            regex: http
+        scrape_interval: 30s
+        metrics_path: '/actuator/prometheus'
+      
+      # Config Server
+      - job_name: 'config-server'
+        kubernetes_sd_configs:
+          - role: endpoints
+            namespaces:
+              names:
+                - {{ .Release.Namespace }}
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_service_name]
+            action: keep
+            regex: config-server.*
+          - source_labels: [__meta_kubernetes_endpoint_port_name]
+            action: keep
+            regex: http
+        scrape_interval: 30s
+        metrics_path: '/actuator/prometheus'
+      
+      # API Gateway
+      - job_name: 'api-gateway'
+        kubernetes_sd_configs:
+          - role: endpoints
+            namespaces:
+              names:
+                - {{ .Release.Namespace }}
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_service_name]
+            action: keep
+            regex: api-gateway.*
+          - source_labels: [__meta_kubernetes_endpoint_port_name]
+            action: keep
+            regex: http
+        scrape_interval: 15s
+        metrics_path: '/actuator/prometheus'
+      
+      # Microservices
+      - job_name: 'microservices'
+        kubernetes_sd_configs:
+          - role: endpoints
+            namespaces:
+              names:
+                - {{ .Release.Namespace }}
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_service_name]
+            action: keep
+            regex: '(customer|product|order|payment|notification)-service.*'
+          - source_labels: [__meta_kubernetes_endpoint_port_name]
+            action: keep
+            regex: http
+        scrape_interval: 15s
+        metrics_path: '/actuator/prometheus'
+      
+      # Kafka metrics
+      - job_name: 'kafka'
+        kubernetes_sd_configs:
+          - role: endpoints
+            namespaces:
+              names:
+                - {{ .Release.Namespace }}
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_service_name]
+            action: keep
+            regex: '.*kafka.*'
+          - source_labels: [__meta_kubernetes_endpoint_port_name]
+            action: keep
+            regex: metrics
+        scrape_interval: 30s
+
+  circuit_breaker_rules.yml: |
+    groups:
+      - name: circuit_breaker
+        rules:
+          - alert: CircuitBreakerOpen
+            expr: resilience4j_circuitbreaker_state{state="open"} == 1
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Circuit breaker {{ $labels.name }} is open"
+              description: "Circuit breaker {{ $labels.name }} in service {{ $labels.job }} has been open for more than 1 minute"
+          
+          - alert: CircuitBreakerHighFailureRate
+            expr: rate(resilience4j_circuitbreaker_calls_total{kind="failed"}[5m]) / rate(resilience4j_circuitbreaker_calls_total[5m]) > 0.5
+            for: 2m
+            labels:
+              severity: warning
+            annotations:
+              summary: "High failure rate detected for circuit breaker {{ $labels.name }}"
+              description: "Circuit breaker {{ $labels.name }} has a failure rate above 50% for the last 2 minutes"
+          
+          - alert: CircuitBreakerSlowCalls
+            expr: rate(resilience4j_circuitbreaker_slow_calls_total[5m]) / rate(resilience4j_circuitbreaker_calls_total[5m]) > 0.3
+            for: 2m
+            labels:
+              severity: warning
+            annotations:
+              summary: "High slow call rate for circuit breaker {{ $labels.name }}"
+              description: "Circuit breaker {{ $labels.name }} has slow calls above 30% for the last 2 minutes"
+
+  saga_pattern_rules.yml: |
+    groups:
+      - name: saga_pattern
+        rules:
+          - alert: SagaHighFailureRate
+            expr: rate(saga_failures_total[5m]) / rate(saga_started_total[5m]) > 0.1
+            for: 2m
+            labels:
+              severity: critical
+            annotations:
+              summary: "High saga failure rate detected"
+              description: "Saga pattern has a failure rate above 10% for the last 2 minutes"
+          
+          - alert: SagaLongRunningTransactions
+            expr: histogram_quantile(0.95, rate(saga_duration_seconds_bucket[5m])) > 300
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Long running saga transactions detected"
+              description: "95th percentile of saga duration is above 5 minutes"
+          
+          - alert: SagaCompensationRate
+            expr: rate(saga_compensations_total[5m]) > 0.05
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: "High saga compensation rate"
+              description: "Saga compensations are occurring at a rate higher than expected"
+          
+          - alert: SagaPendingTransactions
+            expr: saga_pending_total > 100
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "High number of pending saga transactions"
+              description: "There are {{ $value }} pending saga transactions for more than 5 minutes"
+
+  general_rules.yml: |
+    groups:
+      - name: microservices
+        rules:
+          - alert: ServiceDown
+            expr: up{job=~"(discovery-service|config-server|api-gateway|customer-service|product-service|order-service|payment-service|notification-service)"} == 0
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Service {{ $labels.job }} is down"
+              description: "Service {{ $labels.job }} has been down for more than 1 minute"
+          
+          - alert: HighMemoryUsage
+            expr: (container_memory_usage_bytes / container_spec_memory_limit_bytes) * 100 > 85
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "High memory usage for {{ $labels.container }}"
+              description: "Container {{ $labels.container }} memory usage is above 85%"
+          
+          - alert: HighCPUUsage
+            expr: (rate(container_cpu_usage_seconds_total[5m]) / container_spec_cpu_quota) * 100 > 80
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "High CPU usage for {{ $labels.container }}"
+              description: "Container {{ $labels.container }} CPU usage is above 80%"
+{{- end }}

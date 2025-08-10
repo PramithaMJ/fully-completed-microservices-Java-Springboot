@@ -1,0 +1,311 @@
+# Default values for ecommerce-microservices
+# Blue-Green Deployment Configuration
+
+# Global settings
+global:
+  imageRegistry: ""
+  imagePullSecrets: []
+  storageClass: ""
+
+# Blue-Green Deployment Strategy
+bluegreen:
+  enabled: true
+  activeSlot: "blue"
+  strategy: "manual" # manual or automatic
+
+# Service Discovery (Eureka)
+discovery:
+  enabled: true
+  name: discovery-service
+  image:
+    repository: ecommerce/discovery-service
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  replicaCount: 2
+  service:
+    type: ClusterIP
+    port: 8761
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 70
+
+# Config Server
+configServer:
+  enabled: true
+  name: config-server
+  image:
+    repository: ecommerce/config-server
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  replicaCount: 2
+  service:
+    type: ClusterIP
+    port: 8888
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+# API Gateway
+gateway:
+  enabled: true
+  name: api-gateway
+  image:
+    repository: ecommerce/api-gateway
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  replicaCount: 3
+  service:
+    type: LoadBalancer
+    port: 8080
+    targetPort: 8080
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 70
+
+# Customer Service
+customer:
+  enabled: true
+  name: customer-service
+  image:
+    repository: ecommerce/customer-service
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  replicaCount: 3
+  service:
+    type: ClusterIP
+    port: 8090
+  resources:
+    limits:
+      cpu: 800m
+      memory: 1Gi
+    requests:
+      cpu: 400m
+      memory: 512Mi
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 8
+    targetCPUUtilizationPercentage: 70
+  circuitBreaker:
+    enabled: true
+    failureRateThreshold: 50
+    waitDurationInOpenState: 30000
+    slidingWindowSize: 10
+
+# Product Service
+product:
+  enabled: true
+  name: product-service
+  image:
+    repository: ecommerce/product-service
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  replicaCount: 3
+  service:
+    type: ClusterIP
+    port: 8050
+  resources:
+    limits:
+      cpu: 800m
+      memory: 1Gi
+    requests:
+      cpu: 400m
+      memory: 512Mi
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 8
+    targetCPUUtilizationPercentage: 70
+  circuitBreaker:
+    enabled: true
+    failureRateThreshold: 50
+    waitDurationInOpenState: 30000
+    slidingWindowSize: 10
+
+# Order Service (with Saga Pattern)
+order:
+  enabled: true
+  name: order-service
+  image:
+    repository: ecommerce/order-service
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  replicaCount: 3
+  service:
+    type: ClusterIP
+    port: 8070
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1Gi
+    requests:
+      cpu: 500m
+      memory: 512Mi
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 70
+  circuitBreaker:
+    enabled: true
+    failureRateThreshold: 30
+    waitDurationInOpenState: 60000
+    slidingWindowSize: 20
+  saga:
+    enabled: true
+    retryAttempts: 3
+    compensationTimeout: 30000
+
+# Payment Service
+payment:
+  enabled: true
+  name: payment-service
+  image:
+    repository: ecommerce/payment-service
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  replicaCount: 3
+  service:
+    type: ClusterIP
+    port: 8060
+  resources:
+    limits:
+      cpu: 800m
+      memory: 1Gi
+    requests:
+      cpu: 400m
+      memory: 512Mi
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 8
+    targetCPUUtilizationPercentage: 70
+  circuitBreaker:
+    enabled: true
+    failureRateThreshold: 30
+    waitDurationInOpenState: 60000
+    slidingWindowSize: 20
+
+# Notification Service
+notification:
+  enabled: true
+  name: notification-service
+  image:
+    repository: ecommerce/notification-service
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  replicaCount: 2
+  service:
+    type: ClusterIP
+    port: 8040
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 6
+    targetCPUUtilizationPercentage: 70
+
+# Database configurations
+mongodb:
+  enabled: true
+  auth:
+    enabled: true
+    rootUser: admin
+    rootPassword: admin123
+  persistence:
+    enabled: true
+    size: 10Gi
+
+postgresql:
+  enabled: true
+  auth:
+    postgresPassword: admin123
+    username: ecommerce
+    password: ecommerce123
+    database: ecommerce
+  persistence:
+    enabled: true
+    size: 10Gi
+
+# Kafka configuration
+kafka:
+  enabled: true
+  persistence:
+    enabled: true
+    size: 10Gi
+  zookeeper:
+    persistence:
+      enabled: true
+      size: 5Gi
+
+# Monitoring
+monitoring:
+  enabled: true
+  prometheus:
+    enabled: true
+  grafana:
+    enabled: true
+
+# Health checks
+healthChecks:
+  livenessProbe:
+    initialDelaySeconds: 90
+    periodSeconds: 30
+    timeoutSeconds: 10
+    failureThreshold: 5
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+
+# Security
+security:
+  enabled: true
+  networkPolicies:
+    enabled: true
+  podSecurityPolicy:
+    enabled: true
+
+# Ingress
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+  hosts:
+    - host: ecommerce-api.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
