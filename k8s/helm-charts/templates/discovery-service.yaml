@@ -1,0 +1,103 @@
+{{- if .Values.discovery.enabled }}
+{{- $serviceName := .Values.discovery.name }}
+{{- $slot := include "ecommerce.slot" . }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $serviceName }}-{{ $slot }}
+  labels:
+    {{- include "ecommerce.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $serviceName }}
+    deployment.kubernetes.io/slot: {{ $slot }}
+spec:
+  replicas: {{ .Values.discovery.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      {{- include "ecommerce.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: {{ $serviceName }}
+      deployment.kubernetes.io/slot: {{ $slot }}
+  template:
+    metadata:
+      labels:
+        {{- include "ecommerce.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: {{ $serviceName }}
+        deployment.kubernetes.io/slot: {{ $slot }}
+    spec:
+      containers:
+      - name: {{ $serviceName }}
+        image: "{{ .Values.discovery.image.repository }}:{{ .Values.discovery.image.tag }}"
+        imagePullPolicy: {{ .Values.discovery.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.discovery.service.port }}
+          name: http
+        env:
+        {{- include "ecommerce.envVars" . | nindent 8 }}
+        - name: SERVER_PORT
+          value: "{{ .Values.discovery.service.port }}"
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: http
+          initialDelaySeconds: {{ .Values.healthChecks.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.healthChecks.livenessProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.healthChecks.livenessProbe.timeoutSeconds }}
+          failureThreshold: {{ .Values.healthChecks.livenessProbe.failureThreshold }}
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: http
+          initialDelaySeconds: {{ .Values.healthChecks.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.healthChecks.readinessProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.healthChecks.readinessProbe.timeoutSeconds }}
+          failureThreshold: {{ .Values.healthChecks.readinessProbe.failureThreshold }}
+        resources:
+          {{- toYaml .Values.discovery.resources | nindent 10 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "ecommerce.serviceName" (dict "serviceName" $serviceName "Values" .Values) }}
+  labels:
+    {{- include "ecommerce.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $serviceName }}
+spec:
+  type: {{ .Values.discovery.service.type }}
+  ports:
+  - port: {{ .Values.discovery.service.port }}
+    targetPort: http
+    protocol: TCP
+    name: http
+  selector:
+    {{- include "ecommerce.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $serviceName }}
+    deployment.kubernetes.io/slot: {{ $slot }}
+{{- if .Values.discovery.autoscaling.enabled }}
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ $serviceName }}-{{ $slot }}
+  labels:
+    {{- include "ecommerce.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ $serviceName }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ $serviceName }}-{{ $slot }}
+  minReplicas: {{ .Values.discovery.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.discovery.autoscaling.maxReplicas }}
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: {{ .Values.discovery.autoscaling.targetCPUUtilizationPercentage }}
+{{- end }}
+{{- end }}

@@ -1,0 +1,283 @@
+{{- if .Values.security.networkPolicies.enabled }}
+# Discovery Service Network Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: discovery-service-netpol
+  labels:
+    {{- include "ecommerce.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: discovery-service
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: {{ include "ecommerce.name" . }}
+    ports:
+    - protocol: TCP
+      port: 8761
+  egress:
+  - {} # Allow all outbound traffic for service registration
+
+---
+# Config Server Network Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: config-server-netpol
+  labels:
+    {{- include "ecommerce.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: config-server
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: {{ include "ecommerce.name" . }}
+    ports:
+    - protocol: TCP
+      port: 8888
+  egress:
+  - {} # Allow all outbound traffic for Git access
+
+---
+# API Gateway Network Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: api-gateway-netpol
+  labels:
+    {{- include "ecommerce.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: api-gateway
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - {} # Allow all inbound traffic (external access)
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: {{ include "ecommerce.name" . }}
+    ports:
+    - protocol: TCP
+      port: 8761 # Discovery Service
+    - protocol: TCP
+      port: 8888 # Config Server
+    - protocol: TCP
+      port: 8090 # Customer Service
+    - protocol: TCP
+      port: 8050 # Product Service
+    - protocol: TCP
+      port: 8070 # Order Service
+    - protocol: TCP
+      port: 8060 # Payment Service
+    - protocol: TCP
+      port: 8040 # Notification Service
+  - {} # DNS resolution
+
+---
+# Microservices Network Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: microservices-netpol
+  labels:
+    {{- include "ecommerce.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: customer-service
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: api-gateway
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: order-service # For saga pattern
+    ports:
+    - protocol: TCP
+      port: 8090
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: discovery-service
+    ports:
+    - protocol: TCP
+      port: 8761
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: config-server
+    ports:
+    - protocol: TCP
+      port: 8888
+  - to: # Database access
+    - podSelector: {}
+    ports:
+    - protocol: TCP
+      port: 5432
+    - protocol: TCP
+      port: 27017
+  - to: # Kafka access
+    - podSelector: {}
+    ports:
+    - protocol: TCP
+      port: 9092
+  - {} # DNS resolution
+
+---
+# Order Service Network Policy (Saga Coordinator)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: order-service-netpol
+  labels:
+    {{- include "ecommerce.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: order-service
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: api-gateway
+    ports:
+    - protocol: TCP
+      port: 8070
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: discovery-service
+    ports:
+    - protocol: TCP
+      port: 8761
+  - to:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: config-server
+    ports:
+    - protocol: TCP
+      port: 8888
+  - to: # Communication with other services for saga pattern
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: customer-service
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: product-service
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: payment-service
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/component: notification-service
+    ports:
+    - protocol: TCP
+      port: 8090
+    - protocol: TCP
+      port: 8050
+    - protocol: TCP
+      port: 8060
+    - protocol: TCP
+      port: 8040
+  - to: # Database and Kafka access
+    - podSelector: {}
+    ports:
+    - protocol: TCP
+      port: 27017
+    - protocol: TCP
+      port: 9092
+  - {} # DNS resolution
+
+---
+# Database Network Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: database-netpol
+  labels:
+    {{- include "ecommerce.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: mongodb
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: {{ include "ecommerce.name" . }}
+    ports:
+    - protocol: TCP
+      port: 27017
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: postgresql-netpol
+  labels:
+    {{- include "ecommerce.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: postgresql
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: {{ include "ecommerce.name" . }}
+    ports:
+    - protocol: TCP
+      port: 5432
+
+---
+# Kafka Network Policy
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: kafka-netpol
+  labels:
+    {{- include "ecommerce.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: kafka
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app.kubernetes.io/name: {{ include "ecommerce.name" . }}
+    ports:
+    - protocol: TCP
+      port: 9092
+{{- end }}

@@ -1,0 +1,24 @@
+apiVersion: v2
+name: ecommerce-microservices
+description: A Helm chart for E-commerce Microservices with Blue-Green Deployment
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+
+maintainers:
+- name: Pramitha Jayasooriya
+  email: pramithajayasooriya@example.com
+
+dependencies:
+  - name: kafka
+    version: 23.0.7
+    repository: https://charts.bitnami.com/bitnami
+    condition: kafka.enabled
+  - name: mongodb
+    version: 13.15.1
+    repository: https://charts.bitnami.com/bitnami
+    condition: mongodb.enabled
+  - name: postgresql
+    version: 12.6.6
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled

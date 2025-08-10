@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microservices Architecture Learning Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">
+                <i class="fas fa-cubes"></i> Microservices Learning Platform
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#overview">Overview</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#architecture">Architecture</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#repository">Repository</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#patterns">Patterns</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#deployment">Deployment</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#hands-on">Hands-On</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container text-center">
+            <h1 class="hero-title">Master Microservices Architecture</h1>
+            <p class="hero-subtitle">Learn through a complete e-commerce implementation with Spring Boot & Java</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <h3>8</h3>
+                    <p>Microservices</p>
+                </div>
+                <div class="stat">
+                    <h3>9</h3>
+                    <p>Design Patterns</p>
+                </div>
+                <div class="stat">
+                    <h3>12</h3>
+                    <p>Technologies</p>
+                </div>
+                <div class="stat">
+                    <h3>5</h3>
+                    <p>Circuit Breakers</p>
+                </div>
+            </div>
+            <div class="hero-buttons">
+                <a href="#overview" class="btn btn-primary btn-lg me-3">Start Learning</a>
+                <a href="https://github.com/PramithaMJ/fully-completed-microservices" target="_blank" class="btn btn-outline-light btn-lg">
+                    <i class="fab fa-github"></i> View Source Code
+                </a>
+            </div>
+            
+            <!-- GitHub Repository Info -->
+            <div class="github-info mt-4">
+                <div class="repo-stats">
+                    <a href="https://github.com/PramithaMJ/fully-completed-microservices" target="_blank" class="repo-link">
+                        <i class="fab fa-github"></i>
+                        <span>PramithaMJ/fully-completed-microservices</span>
+                    </a>
+                    <div class="author-info">
+                        <span>Created by <strong>Pramitha Jayasooriya</strong></span>
+                        <a href="https://pramithamj.live" target="_blank" class="author-link">
+                            <i class="fas fa-globe"></i> pramithamj.live
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Context Section -->
+    <section id="overview" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">Business Problem & Solution</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="business-problem">
+                        <h4><i class="fas fa-exclamation-triangle text-warning"></i> The Challenge</h4>
+                        <ul class="problem-list">
+                            <li>E-commerce business with no digital solutions</li>
+                            <li>Manual product catalog management</li>
+                            <li>Customer data scattered across systems</li>
+                            <li>Payment processing inefficiencies</li>
+                            <li>No automated notifications</li>
+                            <li>Scalability concerns for growth</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="business-solution">
+                        <h4><i class="fas fa-lightbulb text-success"></i> The Solution</h4>
+                        <ul class="solution-list">
+                            <li><strong>Product Service:</strong> Centralized catalog with unique codes</li>
+                            <li><strong>Customer Service:</strong> Complete customer profiles</li>
+                            <li><strong>Order Service:</strong> Automated order processing</li>
+                            <li><strong>Payment Service:</strong> Secure payment handling</li>
+                            <li><strong>Notification Service:</strong> Automated email confirmations</li>
+                            <li><strong>Gateway & Discovery:</strong> Scalable infrastructure</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Architecture Diagram -->
+    <section id="architecture" class="section">
+        <div class="container">
+            <h2 class="section-title">Interactive Architecture Diagram</h2>
+            <div class="architecture-diagram">
+                <div class="service-layer">
+                    <h4>Client Layer</h4>
+                    <div class="service-box client-box" data-service="client">
+                        <i class="fas fa-desktop"></i>
+                        <span>Web Client</span>
+                    </div>
+                </div>
+
+                <div class="service-layer">
+                    <h4>Gateway Layer</h4>
+                    <div class="service-box gateway-box" data-service="gateway">
+                        <i class="fas fa-door-open"></i>
+                        <span>API Gateway</span>
+                        <small>Port: 8222</small>
+                    </div>
+                </div>
+
+                <div class="service-layer">
+                    <h4>Core Services</h4>
+                    <div class="service-box config-box" data-service="config">
+                        <i class="fas fa-cog"></i>
+                        <span>Config Server</span>
+                        <small>Port: 8888</small>
+                    </div>
+                    <div class="service-box discovery-box" data-service="discovery">
+                        <i class="fas fa-search"></i>
+                        <span>Discovery Service</span>
+                        <small>Port: 8761</small>
+                    </div>
+                </div>
+
+                <div class="service-layer">
+                    <h4>Business Services</h4>
+                    <div class="service-box business-box" data-service="customer">
+                        <i class="fas fa-users"></i>
+                        <span>Customer Service</span>
+                        <small>MongoDB</small>
+                    </div>
+                    <div class="service-box business-box" data-service="product">
+                        <i class="fas fa-box"></i>
+                        <span>Product Service</span>
+                        <small>PostgreSQL</small>
+                    </div>
+                    <div class="service-box business-box" data-service="order">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Order Service</span>
+                        <small>PostgreSQL</small>
+                    </div>
+                    <div class="service-box business-box" data-service="payment">
+                        <i class="fas fa-credit-card"></i>
+                        <span>Payment Service</span>
+                        <small>PostgreSQL</small>
+                    </div>
+                    <div class="service-box business-box" data-service="notification">
+                        <i class="fas fa-envelope"></i>
+                        <span>Notification Service</span>
+                        <small>MongoDB</small>
+                    </div>
+                </div>
+
+                <div class="service-layer">
+                    <h4>Infrastructure</h4>
+                    <div class="infrastructure-grid">
+                        <div class="infra-box" data-service="postgres">
+                            <i class="fas fa-database"></i>
+                            <span>PostgreSQL</span>
+                        </div>
+                        <div class="infra-box" data-service="mongodb">
+                            <i class="fas fa-leaf"></i>
+                            <span>MongoDB</span>
+                        </div>
+                        <div class="infra-box" data-service="kafka">
+                            <i class="fas fa-stream"></i>
+                            <span>Kafka</span>
+                        </div>
+                        <div class="infra-box" data-service="zipkin">
+                            <i class="fas fa-route"></i>
+                            <span>Zipkin</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Details -->
+    <section id="services" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">Microservices Deep Dive</h2>
+            
+            <!-- Service Tabs -->
+            <ul class="nav nav-pills justify-content-center mb-4" id="serviceTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#config-service">Config Server</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#discovery-service">Discovery</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#gateway-service">Gateway</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#customer-service">Customer</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#order-service">Order</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#notification-service">Notification</button>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content">
+                <!-- Config Service -->
+                <div class="tab-pane fade show active" id="config-service">
+                    <div class="service-detail">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="service-info">
+                                    <h4><i class="fas fa-cog text-primary"></i> Config Server</h4>
+                                    <p><strong>Port:</strong> 8888</p>
+                                    <p><strong>Technology:</strong> Spring Cloud Config</p>
+                                    <p><strong>Database:</strong> File System</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="service-description">
+                                    <h5>Purpose & Functionality</h5>
+                                    <p>The Config Server acts as a centralized configuration management system for all microservices. It eliminates the need to rebuild and redeploy services when configuration changes.</p>
+                                    
+                                    <h6>Key Features:</h6>
+                                    <ul>
+                                        <li>Centralized configuration for all services</li>
+                                        <li>Environment-specific configurations (dev, staging, prod)</li>
+                                        <li>Dynamic configuration refresh without restart</li>
+                                        <li>Version control integration with Git</li>
+                                        <li>Security for sensitive configurations</li>
+                                    </ul>
+
+                                    <h6>How it Works:</h6>
+                                    <ol>
+                                        <li>Stores all service configurations in a central location</li>
+                                        <li>Services request their configuration on startup</li>
+                                        <li>Provides environment-specific overrides</li>
+                                        <li>Enables runtime configuration updates via refresh endpoints</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Discovery Service -->
+                <div class="tab-pane fade" id="discovery-service">
+                    <div class="service-detail">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="service-info">
+                                    <h4><i class="fas fa-search text-info"></i> Discovery Service</h4>
+                                    <p><strong>Port:</strong> 8761</p>
+                                    <p><strong>Technology:</strong> Netflix Eureka</p>
+                                    <p><strong>Database:</strong> In-Memory Registry</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="service-description">
+                                    <h5>Service Registry & Discovery</h5>
+                                    <p>The Discovery Service maintains a registry of all available microservice instances, enabling dynamic service-to-service communication without hardcoded URLs.</p>
+                                    
+                                    <h6>Key Features:</h6>
+                                    <ul>
+                                        <li>Automatic service registration</li>
+                                        <li>Health check monitoring</li>
+                                        <li>Load balancing support</li>
+                                        <li>Failover and resilience</li>
+                                        <li>Web dashboard for monitoring</li>
+                                    </ul>
+
+                                    <h6>Service Registration Flow:</h6>
+                                    <ol>
+                                        <li>Services register themselves on startup</li>
+                                        <li>Send periodic heartbeats to maintain registration</li>
+                                        <li>Other services discover available instances</li>
+                                        <li>Automatic deregistration on shutdown</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gateway Service -->
+                <div class="tab-pane fade" id="gateway-service">
+                    <div class="service-detail">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="service-info">
+                                    <h4><i class="fas fa-door-open text-success"></i> API Gateway</h4>
+                                    <p><strong>Port:</strong> 8222</p>
+                                    <p><strong>Technology:</strong> Spring Cloud Gateway</p>
+                                    <p><strong>Features:</strong> Routing, Load Balancing, Tracing</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="service-description">
+                                    <h5>Single Entry Point</h5>
+                                    <p>The API Gateway serves as the single entry point for all client requests, routing them to appropriate microservices while providing cross-cutting concerns.</p>
+                                    
+                                    <h6>Key Responsibilities:</h6>
+                                    <ul>
+                                        <li>Request routing to appropriate services</li>
+                                        <li>Load balancing across service instances</li>
+                                        <li>Authentication and authorization</li>
+                                        <li>Request/response transformation</li>
+                                        <li>Rate limiting and throttling</li>
+                                        <li>Distributed tracing integration</li>
+                                    </ul>
+
+                                    <h6>Routing Example:</h6>
+                                    <div class="code-example">
+                                        <code>
+                                            /api/customers/** → Customer Service<br>
+                                            /api/products/** → Product Service<br>
+                                            /api/orders/** → Order Service<br>
+                                            /api/payments/** → Payment Service
+                                        </code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customer Service -->
+                <div class="tab-pane fade" id="customer-service">
+                    <div class="service-detail">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="service-info">
+                                    <h4><i class="fas fa-users text-primary"></i> Customer Service</h4>
+                                    <p><strong>Database:</strong> MongoDB</p>
+                                    <p><strong>Technology:</strong> Spring Data MongoDB</p>
+                                    <p><strong>Pattern:</strong> Document Store</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="service-description">
+                                    <h5>Customer Profile Management</h5>
+                                    <p>Manages all customer-related data and operations, storing flexible customer profiles in MongoDB for scalability and schema evolution.</p>
+                                    
+                                    <h6>Data Model:</h6>
+                                    <ul>
+                                        <li><strong>Personal Info:</strong> First name, Last name, Email</li>
+                                        <li><strong>Address:</strong> Street, City, Zipcode</li>
+                                        <li><strong>Metadata:</strong> Creation date, Update history</li>
+                                    </ul>
+
+                                    <h6>API Endpoints:</h6>
+                                    <div class="api-endpoints">
+                                        <div class="endpoint">
+                                            <span class="method post">POST</span> /api/customers - Create customer
+                                        </div>
+                                        <div class="endpoint">
+                                            <span class="method get">GET</span> /api/customers/{id} - Get customer details
+                                        </div>
+                                        <div class="endpoint">
+                                            <span class="method put">PUT</span> /api/customers/{id} - Update customer
+                                        </div>
+                                        <div class="endpoint">
+                                            <span class="method get">GET</span> /api/customers/exists/{id} - Check existence
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Service -->
+                <div class="tab-pane fade" id="order-service">
+                    <div class="service-detail">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="service-info">
+                                    <h4><i class="fas fa-shopping-cart text-warning"></i> Order Service</h4>
+                                    <p><strong>Database:</strong> PostgreSQL</p>
+                                    <p><strong>Technology:</strong> Spring Data JPA</p>
+                                    <p><strong>Integration:</strong> OpenFeign, Kafka</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="service-description">
+                                    <h5>Order Processing Hub</h5>
+                                    <p>Orchestrates the complete order lifecycle, integrating with multiple services to validate customers, check product availability, process payments, and trigger notifications.</p>
+                                    
+                                    <h6>Order Processing Flow:</h6>
+                                    <ol>
+                                        <li><strong>Validation:</strong> Check customer exists via Customer Service</li>
+                                        <li><strong>Inventory:</strong> Validate products and quantities via Product Service</li>
+                                        <li><strong>Order Creation:</strong> Create order with PENDING status</li>
+                                        <li><strong>Payment:</strong> Process payment via Payment Service</li>
+                                        <li><strong>Confirmation:</strong> Send confirmation via Kafka to Notification Service</li>
+                                        <li><strong>Status Update:</strong> Update order status based on payment result</li>
+                                    </ol>
+
+                                    <h6>Service Dependencies:</h6>
+                                    <ul>
+                                        <li><strong>CustomerClient:</strong> Customer validation</li>
+                                        <li><strong>ProductClient:</strong> Product verification</li>
+                                        <li><strong>PaymentClient:</strong> Payment processing</li>
+                                        <li><strong>Kafka Producer:</strong> Event notifications</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notification Service -->
+                <div class="tab-pane fade" id="notification-service">
+                    <div class="service-detail">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="service-info">
+                                    <h4><i class="fas fa-envelope text-danger"></i> Notification Service</h4>
+                                    <p><strong>Database:</strong> MongoDB</p>
+                                    <p><strong>Technology:</strong> Kafka, Thymeleaf</p>
+                                    <p><strong>Integration:</strong> Java Mail Sender</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="service-description">
+                                    <h5>Event-Driven Notifications</h5>
+                                    <p>Handles all notification requirements using event-driven architecture. Listens to Kafka events and sends appropriate email notifications to customers.</p>
+                                    
+                                    <h6>Notification Types:</h6>
+                                    <ul>
+                                        <li><strong>Order Confirmation:</strong> When order is successfully created</li>
+                                        <li><strong>Payment Success:</strong> When payment is processed successfully</li>
+                                        <li><strong>Payment Failure:</strong> When payment processing fails</li>
+                                        <li><strong>Order Updates:</strong> Status changes and updates</li>
+                                    </ul>
+
+                                    <h6>Event Processing Flow:</h6>
+                                    <ol>
+                                        <li>Listen to Kafka topics (order-topic, payment-topic)</li>
+                                        <li>Parse incoming event messages</li>
+                                        <li>Generate HTML email using Thymeleaf templates</li>
+                                        <li>Send email via configured SMTP server</li>
+                                        <li>Store notification history in MongoDB</li>
+                                    </ol>
+
+                                    <h6>Email Templates:</h6>
+                                    <ul>
+                                        <li>order-confirmation.html</li>
+                                        <li>payment-confirmation.html</li>
+                                        <li>payment-failed.html</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Patterns -->
+    <section id="patterns" class="section">
+        <div class="container">
+            <h2 class="section-title">Microservices Design Patterns</h2>
+            <div class="pattern-grid">
+                <!-- Service Registry Pattern -->
+                <div class="pattern-card">
+                    <div class="pattern-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h4>Service Registry & Discovery</h4>
+                    <p><strong>Implementation:</strong> Netflix Eureka</p>
+                    <p>Services automatically register themselves and discover other services dynamically.</p>
+                    <div class="pattern-benefits">
+                        <h6>Benefits:</h6>
+                        <ul>
+                            <li>Dynamic service location</li>
+                            <li>Load balancing</li>
+                            <li>Health monitoring</li>
+                            <li>Fault tolerance</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- API Gateway Pattern -->
+                <div class="pattern-card">
+                    <div class="pattern-icon">
+                        <i class="fas fa-door-open"></i>
+                    </div>
+                    <h4>API Gateway</h4>
+                    <p><strong>Implementation:</strong> Spring Cloud Gateway</p>
+                    <p>Single entry point for all client requests with routing and cross-cutting concerns.</p>
+                    <div class="pattern-benefits">
+                        <h6>Benefits:</h6>
+                        <ul>
+                            <li>Simplified client interactions</li>
+                            <li>Centralized security</li>
+                            <li>Request transformation</li>
+                            <li>Rate limiting</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Database per Service -->
+                <div class="pattern-card">
+                    <div class="pattern-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h4>Database per Service</h4>
+                    <p><strong>Implementation:</strong> PostgreSQL + MongoDB</p>
+                    <p>Each service owns its data and database, ensuring loose coupling.</p>
+                    <div class="pattern-benefits">
+                        <h6>Benefits:</h6>
+                        <ul>
+                            <li>Data isolation</li>
+                            <li>Technology diversity</li>
+                            <li>Independent scaling</li>
+                            <li>Fault isolation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Event-Driven Architecture -->
+                <div class="pattern-card">
+                    <div class="pattern-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h4>Event-Driven Architecture</h4>
+                    <p><strong>Implementation:</strong> Apache Kafka</p>
+                    <p>Services communicate through events for loose coupling and resilience.</p>
+                    <div class="pattern-benefits">
+                        <h6>Benefits:</h6>
+                        <ul>
+                            <li>Loose coupling</li>
+                            <li>Asynchronous processing</li>
+                            <li>Event sourcing</li>
+                            <li>Scalability</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Circuit Breaker -->
+                <div class="pattern-card">
+                    <div class="pattern-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>Externalized Configuration</h4>
+                    <p><strong>Implementation:</strong> Spring Cloud Config</p>
+                    <p>Configuration management separated from application code for flexibility.</p>
+                    <div class="pattern-benefits">
+                        <h6>Benefits:</h6>
+                        <ul>
+                            <li>Environment-specific configs</li>
+                            <li>Runtime updates</li>
+                            <li>Version control</li>
+                            <li>Security separation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Distributed Tracing -->
+                <div class="pattern-card">
+                    <div class="pattern-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <h4>Distributed Tracing</h4>
+                    <p><strong>Implementation:</strong> Zipkin</p>
+                    <p>Track requests across multiple services for debugging and monitoring.</p>
+                    <div class="pattern-benefits">
+                        <h6>Benefits:</h6>
+                        <ul>
+                            <li>Performance monitoring</li>
+                            <li>Debugging assistance</li>
+                            <li>Service dependencies</li>
+                            <li>Bottleneck identification</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Circuit Breaker Pattern -->
+                <div class="pattern-card">
+                    <div class="pattern-icon">
+                        <i class="fas fa-plug-circle-xmark"></i>
+                    </div>
+                    <h4>Circuit Breaker</h4>
+                    <p><strong>Implementation:</strong> Resilience4j</p>
+                    <p>Prevents cascading failures by monitoring service calls and failing fast when downstream services are unavailable.</p>
+                    <div class="pattern-benefits">
+                        <h6>Benefits:</h6>
+                        <ul>
+                            <li>Fault tolerance</li>
+                            <li>Automatic recovery</li>
+                            <li>Resource protection</li>
+                            <li>Cascading failure prevention</li>
+                        </ul>
+                    </div>
+                    <div class="implementation-details">
+                        <h6>Saga-Specific Circuit Breakers:</h6>
+                        <ul>
+                            <li><strong>Saga Orchestration:</strong> 40% failure threshold</li>
+                            <li><strong>Saga Compensation:</strong> 25% failure threshold</li>
+                            <li><strong>Saga Recovery:</strong> 60% failure threshold</li>
+                            <li><strong>Customer Validation:</strong> 35% failure threshold</li>
+                            <li><strong>Inventory Reservation:</strong> 45% failure threshold</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Saga Pattern -->
+                <div class="pattern-card">
+                    <div class="pattern-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h4>Saga Pattern</h4>
+                    <p><strong>Implementation:</strong> Choreography + Orchestration</p>
+                    <p>Manages distributed transactions across multiple services with compensation logic for rollback scenarios.</p>
+                    <div class="pattern-benefits">
+                        <h6>Benefits:</h6>
+                        <ul>
+                            <li>Distributed transaction management</li>
+                            <li>Automatic compensation</li>
+                            <li>Eventual consistency</li>
+                            <li>Resilience to failures</li>
+                        </ul>
+                    </div>
+                    <div class="implementation-details">
+                        <h6>Saga Flow:</h6>
+                        <ol>
+                            <li><strong>Customer Validation:</strong> Verify customer exists</li>
+                            <li><strong>Inventory Reservation:</strong> Reserve products</li>
+                            <li><strong>Payment Processing:</strong> Process payment</li>
+                            <li><strong>Order Completion:</strong> Finalize order</li>
+                        </ol>
+                        <p><small><strong>Recovery:</strong> Automatic timeout handling and retry mechanisms with exponential backoff</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hands-On Section -->
+    <section id="hands-on" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">Hands-On Learning</h2>
+            
+            <!-- Setup Instructions -->
+            <div class="hands-on-section">
+                <h3><i class="fas fa-play-circle"></i> Getting Started</h3>
+                
+                <!-- GitHub Repository Clone Section -->
+                <div class="github-clone-section mb-4">
+                    <div class="alert alert-info">
+                        <h5><i class="fab fa-github"></i> Clone the Repository First</h5>
+                        <p>Before following the setup steps, clone the complete source code from GitHub:</p>
+                        <div class="code-block">
+                            <code>git clone https://github.com/PramithaMJ/fully-completed-microservices.git
+cd fully-completed-microservices</code>
+                        </div>
+                        <p class="mb-0">
+                            <strong>Repository:</strong> 
+                            <a href="https://github.com/PramithaMJ/fully-completed-microservices" target="_blank" class="text-primary">
+                                https://github.com/PramithaMJ/fully-completed-microservices
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="setup-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h5>Prerequisites</h5>
+                            <ul>
+                                <li>Java 17+</li>
+                                <li>Maven 3.6+</li>
+                                <li>Docker & Docker Compose</li>
+                                <li>IDE (IntelliJ IDEA or VS Code)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h5>Start Infrastructure</h5>
+                            <div class="code-block">
+                                <code>docker-compose up -d</code>
+                            </div>
+                            <p>This starts PostgreSQL, MongoDB, Kafka, Zipkin, and admin tools.</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h5>Start Core Services</h5>
+                            <div class="service-startup">
+                                <div class="startup-order">
+                                    <span class="order-number">1.</span> Config Server (Port 8888)
+                                </div>
+                                <div class="startup-order">
+                                    <span class="order-number">2.</span> Discovery Service (Port 8761)
+                                </div>
+                                <div class="startup-order">
+                                    <span class="order-number">3.</span> API Gateway (Port 8222)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h5>Start Business Services</h5>
+                            <p>Start Customer, Product, Order, Payment, and Notification services in any order.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testing Scenarios -->
+            <div class="testing-section mt-5">
+                <h3><i class="fas fa-vial"></i> Testing Scenarios</h3>
+                <div class="scenario-tabs">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#scenario-customer">Create Customer</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#scenario-product">Add Product</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#scenario-order">Place Order</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#scenario-tracing">View Tracing</button>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="scenario-customer">
+                            <div class="scenario-content">
+                                <h5>Create a Customer</h5>
+                                <div class="curl-example">
+                                    <h6>API Request:</h6>
+                                    <pre><code>curl -X POST http://localhost:8222/api/customers \
+  -H "Content-Type: application/json" \
+  -d '{
+    "firstname": "John",
+    "lastname": "Doe",
+    "email": "john.doe@example.com",
+    "address": {
+      "street": "123 Main St",
+      "houseNumber": "123",
+      "zipCode": "12345"
+    }
+  }'</code></pre>
+                                </div>
+                                <div class="expected-result">
+                                    <h6>What Happens:</h6>
+                                    <ol>
+                                        <li>Request hits API Gateway on port 8222</li>
+                                        <li>Gateway routes to Customer Service via Eureka discovery</li>
+                                        <li>Customer data stored in MongoDB</li>
+                                        <li>Response includes generated customer ID</li>
+                                        <li>Trace information sent to Zipkin</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="scenario-product">
+                            <div class="scenario-content">
+                                <h5>Add a Product</h5>
+                                <div class="curl-example">
+                                    <h6>API Request:</h6>
+                                    <pre><code>curl -X POST http://localhost:8222/api/products \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "MacBook Pro",
+    "description": "Apple MacBook Pro 16-inch",
+    "availableQuantity": 10,
+    "price": 2499.99
+  }'</code></pre>
+                                </div>
+                                <div class="expected-result">
+                                    <h6>What Happens:</h6>
+                                    <ol>
+                                        <li>Request routed through Gateway to Product Service</li>
+                                        <li>Product stored in PostgreSQL database</li>
+                                        <li>Auto-generated product ID returned</li>
+                                        <li>Inventory tracking initialized</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="scenario-order">
+                            <div class="scenario-content">
+                                <h5>Place an Order</h5>
+                                <div class="curl-example">
+                                    <h6>API Request:</h6>
+                                    <pre><code>curl -X POST http://localhost:8222/api/orders \
+  -H "Content-Type: application/json" \
+  -d '{
+    "customerId": "customer_id_here",
+    "products": [
+      {
+        "productId": "product_id_here",
+        "quantity": 1
+      }
+    ],
+    "paymentMethod": "PAYPAL"
+  }'</code></pre>
+                                </div>
+                                <div class="expected-result">
+                                    <h6>Complete Order Flow:</h6>
+                                    <ol>
+                                        <li><strong>Validation:</strong> Order Service validates customer exists</li>
+                                        <li><strong>Inventory:</strong> Checks product availability</li>
+                                        <li><strong>Order Creation:</strong> Creates order with PENDING status</li>
+                                        <li><strong>Payment:</strong> Processes payment via Payment Service</li>
+                                        <li><strong>Kafka Event:</strong> Publishes order confirmation event</li>
+                                        <li><strong>Email:</strong> Notification Service sends confirmation email</li>
+                                        <li><strong>Status Update:</strong> Order status updated to PAID</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="scenario-tracing">
+                            <div class="scenario-content">
+                                <h5>View Distributed Tracing</h5>
+                                <div class="tracing-info">
+                                    <h6>Zipkin Dashboard:</h6>
+                                    <p><a href="http://localhost:9411" target="_blank" class="btn btn-outline-primary">Open Zipkin UI</a></p>
+                                    
+                                    <h6>What You'll See:</h6>
+                                    <ul>
+                                        <li>Complete request trace across all services</li>
+                                        <li>Service call duration and timing</li>
+                                        <li>Service dependencies visualization</li>
+                                        <li>Performance bottlenecks identification</li>
+                                        <li>Error propagation tracking</li>
+                                    </ul>
+
+                                    <h6>Trace Components:</h6>
+                                    <div class="trace-flow">
+                                        <div class="trace-step">Gateway</div>
+                                        <div class="trace-arrow">→</div>
+                                        <div class="trace-step">Order Service</div>
+                                        <div class="trace-arrow">→</div>
+                                        <div class="trace-step">Customer Service</div>
+                                        <div class="trace-arrow">→</div>
+                                        <div class="trace-step">Product Service</div>
+                                        <div class="trace-arrow">→</div>
+                                        <div class="trace-step">Payment Service</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monitoring Dashboard -->
+            <div class="monitoring-section mt-5">
+                <h3><i class="fas fa-chart-line"></i> Monitoring Dashboards</h3>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h5>Eureka Discovery</h5>
+                        <p>View all registered services and their health status</p>
+                        <a href="http://localhost:8761" target="_blank" class="btn btn-primary">Open Dashboard</a>
+                    </div>
+                    <div class="dashboard-card">
+                        <h5>PostgreSQL Admin</h5>
+                        <p>Manage PostgreSQL databases for Order, Payment, and Product services</p>
+                        <a href="http://localhost:5050" target="_blank" class="btn btn-primary">Open PgAdmin</a>
+                    </div>
+                    <div class="dashboard-card">
+                        <h5>MongoDB Admin</h5>
+                        <p>View MongoDB collections for Customer and Notification services</p>
+                        <a href="http://localhost:8081" target="_blank" class="btn btn-primary">Open Mongo Express</a>
+                    </div>
+                    <div class="dashboard-card">
+                        <h5>Email Testing</h5>
+                        <p>View sent emails and test notification functionality</p>
+                        <a href="http://localhost:1080" target="_blank" class="btn btn-primary">Open MailDev</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GitHub Repository Section -->
+    <section id="repository" class="section bg-primary text-white">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h2 class="text-white mb-3">
+                        <i class="fab fa-github me-3"></i>
+                        Complete Source Code Available
+                    </h2>
+                    <p class="lead mb-4">
+                        Access the complete, production-ready microservices implementation with detailed documentation, 
+                        configuration files, and step-by-step commit history.
+                    </p>
+                    
+                    <div class="repo-features">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check-circle text-success me-2"></i> Complete Spring Boot 3.2.5 implementation</li>
+                                    <li><i class="fas fa-check-circle text-success me-2"></i> Docker Compose configuration</li>
+                                    <li><i class="fas fa-check-circle text-success me-2"></i> Detailed README documentation</li>
+                                    <li><i class="fas fa-check-circle text-success me-2"></i> Step-by-step commit history</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check-circle text-success me-2"></i> Production-ready configurations</li>
+                                    <li><i class="fas fa-check-circle text-success me-2"></i> Comprehensive testing examples</li>
+                                    <li><i class="fas fa-check-circle text-success me-2"></i> MIT License - Free to use</li>
+                                    <li><i class="fas fa-check-circle text-success me-2"></i> Active community support</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 text-center">
+                    <div class="github-card">
+                        <div class="github-card-header">
+                            <i class="fab fa-github github-icon"></i>
+                            <h4>Repository</h4>
+                        </div>
+                        <div class="github-card-body">
+                            <h5>fully-completed-microservices</h5>
+                            <p>Spring Boot Microservices Architecture</p>
+                            <div class="github-stats">
+                                <span class="badge bg-light text-dark me-2">
+                                    <i class="fas fa-code"></i> Java
+                                </span>
+                                <span class="badge bg-light text-dark me-2">
+                                    <i class="fas fa-star"></i> Production Ready
+                                </span>
+                                <span class="badge bg-light text-dark">
+                                    <i class="fas fa-users"></i> Educational
+                                </span>
+                            </div>
+                        </div>
+                        <div class="github-card-footer">
+                            <a href="https://github.com/PramithaMJ/fully-completed-microservices" 
+                               target="_blank" 
+                               class="btn btn-light btn-lg w-100">
+                                <i class="fab fa-github me-2"></i>
+                                View Repository
+                            </a>
+                            <div class="mt-2">
+                                <small class="text-light">
+                                    Created by <strong>Pramitha Jayasooriya</strong>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="row mt-5">
+                <div class="col-lg-12">
+                    <div class="quick-actions">
+                        <h4 class="text-center mb-4">Quick Actions</h4>
+                        <div class="action-buttons">
+                            <a href="https://github.com/PramithaMJ/fully-completed-microservices/archive/refs/heads/main.zip" 
+                               class="btn btn-outline-light me-3">
+                                <i class="fas fa-download"></i> Download ZIP
+                            </a>
+                            <a href="https://github.com/PramithaMJ/fully-completed-microservices/fork" 
+                               target="_blank" 
+                               class="btn btn-outline-light me-3">
+                                <i class="fas fa-code-branch"></i> Fork Repository
+                            </a>
+                            <a href="https://github.com/PramithaMJ/fully-completed-microservices/issues" 
+                               target="_blank" 
+                               class="btn btn-outline-light me-3">
+                                <i class="fas fa-bug"></i> Report Issues
+                            </a>
+                            <a href="https://buymeacoffee.com/lpramithamm" 
+                               target="_blank" 
+                               class="btn btn-warning">
+                                <i class="fas fa-coffee"></i> Support Author
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Microservices Deep Dive -->
+    <section id="services" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">Microservices Deep Dive</h2>
+            
+            <!-- Service Tabs -->
+            <ul class="nav nav-pills justify-content-center mb-4" id="serviceTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#config-service">Config Server</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#discovery-service">Discovery</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#gateway-service">Gateway</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#customer-service">Customer</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#order-service">Order</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="pill" data-bs-target="#notification-service">Notification</button>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content">
+                <!-- Config Service -->
+                <div class="tab-pane fade show active" id="config-service">
+                    <div class="service-detail">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="service-info">
+                                    <h4><i class="fas fa-cog text-primary"></i> Config Server</h4>
+                                    <p><strong>Port:</strong> 8888</p>
+                                    <p><strong>Technology:</strong> Spring Cloud Config</p>
+                                    <p><strong>Database:</strong> File System</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="service-description">
+                                    <h5>Purpose & Functionality</h5>
+                                    <p>The Config Server acts as a centralized configuration management system for all microservices. It eliminates the need to rebuild and redeploy services when configuration changes.</p>
+                                    
+                                    <h6>Key Features:</h6>
+                                    <ul>
+                                        <li>Centralized configuration for all services</li>
+                                        <li>Environment-specific configurations (dev, staging, prod)</li>
+                                        <li>Dynamic configuration refresh without restart</li>
+                                        <li>Version control integration with Git</li>
+                                        <li>Security for sensitive configurations</li>
+                                    </ul>
+
+                                    <h6>How it Works:</h6>
+                                    <ol>
+                                        <li>Stores all service configurations in a central location</li>
+                                        <li>Services request their configuration on startup</li>
+                                        <li>Provides environment-specific overrides</li>
+                                        <li>Enables runtime configuration updates via refresh endpoints</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Discovery Service -->
+                <div class="tab-pane fade" id="discovery-service">
+                    <div class="service-detail">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="service-info">
+                                    <h4><i class="fas fa-search text-info"></i> Discovery Service</h4>
+                                    <p><strong>Port:</strong> 8761</p>
+                                    <p><strong>Technology:</strong> Netflix Eureka</p>
+                                    <p><strong>Database:</strong> In-Memory Registry</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="service-description">
+                                    <h5>Service Registry & Discovery</h5>
+                                    <p>The Discovery Service maintains a registry of all available microservice instances, enabling dynamic service-to-service communication without hardcoded URLs.</p>
+                                    
+                                    <h6>Key Features:</h6>
+                                    <ul>
+                                        <li>Automatic service registration</li>
+                                        <li>Health check monitoring</li>
+                                        <li>Load balancing support</li>
+                                        <li>Failover and resilience</li>
+                                        <li>Web dashboard for monitoring</li>
+                                    </ul>
+
+                                    <h6>Service Registration Flow:</h6>
+                                    <ol>
+                                        <li>Services register themselves on startup</li>
+                                        <li>Send periodic heartbeats to maintain registration</li>
+                                        <li>Other services discover available instances</li>
+                                        <li>Automatic deregistration on shutdown</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gateway Service -->
+                <div class="tab-pane fade" id="gateway-service">
+                    <div class="service-detail">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="service-info">
+                                    <h4><i class="fas fa-door-open text-success"></i> API Gateway</h4>
+                                    <p><strong>Port:</strong> 8222</p>
+                                    <p><strong>Technology:</strong> Spring Cloud Gateway</p>
+                                    <p><strong>Features:</strong> Routing, Load Balancing, Tracing</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="service-description">
+                                    <h5>Single Entry Point</h5>
+                                    <p>The API Gateway serves as the single entry point for all client requests, routing them to appropriate microservices while providing cross-cutting concerns.</p>
+                                    
+                                    <h6>Key Responsibilities:</h6>
+                                    <ul>
+                                        <li>Request routing to appropriate services</li>
+                                        <li>Load balancing across service instances</li>
+                                        <li>Authentication and authorization</li>
+                                        <li>Request/response transformation</li>
+                                        <li>Rate limiting and throttling</li>
+                                        <li>Distributed tracing integration</li>
+                                    </ul>
+
+                                    <h6>Routing Example:</h6>
+                                    <div class="code-example">
+                                        <code>
+                                            /api/customers/** → Customer Service<br>
+                                            /api/products/** → Product Service<br>
+                                            /api/orders/** → Order Service<br>
+                                            /api/payments/** → Payment Service
+                                        </code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customer Service -->
+                <div class="tab-pane fade" id="customer-service">
+                    <div class="service-detail">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="service-info">
+                                    <h4><i class="fas fa-users text-primary"></i> Customer Service</h4>
+                                    <p><strong>Database:</strong> MongoDB</p>
+                                    <p><strong>Technology:</strong> Spring Data MongoDB</p>
+                                    <p><strong>Pattern:</strong> Document Store</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="service-description">
+                                    <h5>Customer Profile Management</h5>
+                                    <p>Manages all customer-related data and operations, storing flexible customer profiles in MongoDB for scalability and schema evolution.</p>
+                                    
+                                    <h6>Data Model:</h6>
+                                    <ul>
+                                        <li><strong>Personal Info:</strong> First name, Last name, Email</li>
+                                        <li><strong>Address:</strong> Street, City, Zipcode</li>
+                                        <li><strong>Metadata:</strong> Creation date, Update history</li>
+                                    </ul>
+
+                                    <h6>API Endpoints:</h6>
+                                    <div class="api-endpoints">
+                                        <div class="endpoint">
+                                            <span class="method post">POST</span> /api/customers - Create customer
+                                        </div>
+                                        <div class="endpoint">
+                                            <span class="method get">GET</span> /api/customers/{id} - Get customer details
+                                        </div>
+                                        <div class="endpoint">
+                                            <span class="method put">PUT</span> /api/customers/{id} - Update customer
+                                        </div>
+                                        <div class="endpoint">
+                                            <span class="method get">GET</span> /api/customers/exists/{id} - Check existence
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Service -->
+                <div class="tab-pane fade" id="order-service">
+                    <div class="service-detail">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="service-info">
+                                    <h4><i class="fas fa-shopping-cart text-warning"></i> Order Service</h4>
+                                    <p><strong>Database:</strong> PostgreSQL</p>
+                                    <p><strong>Technology:</strong> Spring Data JPA</p>
+                                    <p><strong>Integration:</strong> OpenFeign, Kafka</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="service-description">
+                                    <h5>Order Processing Hub</h5>
+                                    <p>Orchestrates the complete order lifecycle, integrating with multiple services to validate customers, check product availability, process payments, and trigger notifications.</p>
+                                    
+                                    <h6>Order Processing Flow:</h6>
+                                    <ol>
+                                        <li><strong>Validation:</strong> Check customer exists via Customer Service</li>
+                                        <li><strong>Inventory:</strong> Validate products and quantities via Product Service</li>
+                                        <li><strong>Order Creation:</strong> Create order with PENDING status</li>
+                                        <li><strong>Payment:</strong> Process payment via Payment Service</li>
+                                        <li><strong>Confirmation:</strong> Send confirmation via Kafka to Notification Service</li>
+                                        <li><strong>Status Update:</strong> Update order status based on payment result</li>
+                                    </ol>
+
+                                    <h6>Service Dependencies:</h6>
+                                    <ul>
+                                        <li><strong>CustomerClient:</strong> Customer validation</li>
+                                        <li><strong>ProductClient:</strong> Product verification</li>
+                                        <li><strong>PaymentClient:</strong> Payment processing</li>
+                                        <li><strong>Kafka Producer:</strong> Event notifications</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notification Service -->
+                <div class="tab-pane fade" id="notification-service">
+                    <div class="service-detail">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="service-info">
+                                    <h4><i class="fas fa-envelope text-danger"></i> Notification Service</h4>
+                                    <p><strong>Database:</strong> MongoDB</p>
+                                    <p><strong>Technology:</strong> Kafka, Thymeleaf</p>
+                                    <p><strong>Integration:</strong> Java Mail Sender</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="service-description">
+                                    <h5>Event-Driven Notifications</h5>
+                                    <p>Handles all notification requirements using event-driven architecture. Listens to Kafka events and sends appropriate email notifications to customers.</p>
+                                    
+                                    <h6>Notification Types:</h6>
+                                    <ul>
+                                        <li><strong>Order Confirmation:</strong> When order is successfully created</li>
+                                        <li><strong>Payment Success:</strong> When payment is processed successfully</li>
+                                        <li><strong>Payment Failure:</strong> When payment processing fails</li>
+                                        <li><strong>Order Updates:</strong> Status changes and updates</li>
+                                    </ul>
+
+                                    <h6>Event Processing Flow:</h6>
+                                    <ol>
+                                        <li>Listen to Kafka topics (order-topic, payment-topic)</li>
+                                        <li>Parse incoming event messages</li>
+                                        <li>Generate HTML email using Thymeleaf templates</li>
+                                        <li>Send email via configured SMTP server</li>
+                                        <li>Store notification history in MongoDB</li>
+                                    </ol>
+
+                                    <h6>Email Templates:</h6>
+                                    <ul>
+                                        <li>order-confirmation.html</li>
+                                        <li>payment-confirmation.html</li>
+                                        <li>payment-failed.html</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kubernetes Deployment Section -->
+    <section id="deployment" class="section bg-light">
+        <div class="container">
+            <h2 class="section-title">Enterprise Deployment with Kubernetes</h2>
+            
+            <!-- Deployment Overview -->
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    <div class="deployment-feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-ship"></i>
+                        </div>
+                        <h4>Kubernetes Native</h4>
+                        <p>Complete Kubernetes deployment manifests with Helm charts for production-ready deployment.</p>
+                        <ul class="feature-list">
+                            <li>Deployment configurations for all services</li>
+                            <li>Service discovery and load balancing</li>
+                            <li>ConfigMaps and Secrets management</li>
+                            <li>Ingress controllers and networking</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="deployment-feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <h4>Blue-Green Deployment</h4>
+                        <p>Zero-downtime deployment strategy with automated rollback capabilities for production environments.</p>
+                        <ul class="feature-list">
+                            <li>Automated blue-green switching</li>
+                            <li>Health checks and readiness probes</li>
+                            <li>Instant rollback on failure</li>
+                            <li>Traffic splitting for gradual rollouts</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Helm Charts -->
+            <div class="helm-section mb-5">
+                <h3><i class="fas fa-chart-bar"></i> Helm Chart Deployment</h3>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="code-example">
+                            <h6>Deploy the entire microservices stack:</h6>
+                            <div class="code-block">
+                                <code># Install the complete microservices platform
+helm install ecommerce-platform ./k8s/helm-charts \
+  --namespace microservices \
+  --create-namespace
+
+# Verify deployment
+kubectl get pods -n microservices
+
+# Check services
+kubectl get svc -n microservices</code>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="helm-features">
+                            <h6>Helm Features:</h6>
+                            <ul>
+                                <li>Parameterized deployments</li>
+                                <li>Environment-specific values</li>
+                                <li>Dependency management</li>
+                                <li>Release versioning</li>
+                                <li>Easy upgrades & rollbacks</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blue-Green Deployment Process -->
+            <div class="blue-green-section mb-5">
+                <h3><i class="fas fa-sync-alt"></i> Blue-Green Deployment Process</h3>
+                <div class="deployment-flow">
+                    <div class="deployment-step">
+                        <div class="step-number bg-primary">1</div>
+                        <h5>Prepare Green Environment</h5>
+                        <p>Deploy new version to green environment while blue serves production traffic</p>
+                        <div class="code-snippet">
+                            <code>./k8s/blue-green-deploy.sh prepare-green v2.0.0</code>
+                        </div>
+                    </div>
+                    
+                    <div class="deployment-step">
+                        <div class="step-number bg-success">2</div>
+                        <h5>Health Check & Validation</h5>
+                        <p>Automated health checks ensure green environment is ready for production</p>
+                        <div class="code-snippet">
+                            <code>./k8s/blue-green-deploy.sh validate-green</code>
+                        </div>
+                    </div>
+                    
+                    <div class="deployment-step">
+                        <div class="step-number bg-warning">3</div>
+                        <h5>Switch Traffic</h5>
+                        <p>Instantly switch production traffic from blue to green environment</p>
+                        <div class="code-snippet">
+                            <code>./k8s/blue-green-deploy.sh switch-to-green</code>
+                        </div>
+                    </div>
+                    
+                    <div class="deployment-step">
+                        <div class="step-number bg-danger">4</div>
+                        <h5>Rollback if Needed</h5>
+                        <p>Instant rollback to blue environment if issues are detected</p>
+                        <div class="code-snippet">
+                            <code>./k8s/blue-green-deploy.sh rollback-to-blue</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kubernetes Features -->
+            <div class="k8s-features">
+                <h3><i class="fas fa-cubes"></i> Production-Ready Kubernetes Features</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="feature-card">
+                            <h5><i class="fas fa-shield-alt"></i> Security</h5>
+                            <ul>
+                                <li>Network policies for isolation</li>
+                                <li>RBAC (Role-Based Access Control)</li>
+                                <li>Secrets management</li>
+                                <li>Pod security contexts</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card">
+                            <h5><i class="fas fa-chart-line"></i> Monitoring & Observability</h5>
+                            <ul>
+                                <li>Prometheus metrics collection</li>
+                                <li>Grafana dashboards</li>
+                                <li>Distributed tracing with Jaeger</li>
+                                <li>Centralized logging with ELK stack</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-card">
+                            <h5><i class="fas fa-expand-arrows-alt"></i> Scalability</h5>
+                            <ul>
+                                <li>Horizontal Pod Autoscaling (HPA)</li>
+                                <li>Vertical Pod Autoscaling (VPA)</li>
+                                <li>Resource quotas and limits</li>
+                                <li>Load balancing with ingress</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Start Commands -->
+            <div class="quick-start-k8s">
+                <h3><i class="fas fa-rocket"></i> Quick Start with Kubernetes</h3>
+                <div class="alert alert-info">
+                    <h6>Prerequisites:</h6>
+                    <ul class="mb-2">
+                        <li>Docker Desktop with Kubernetes enabled</li>
+                        <li>kubectl CLI tool</li>
+                        <li>Helm 3.x installed</li>
+                    </ul>
+                </div>
+                
+                <div class="code-block">
+                    <code># 1. Build and push Docker images
+./k8s/build-images.sh
+
+# 2. Deploy with Helm
+helm install microservices ./k8s/helm-charts \
+  --namespace microservices \
+  --create-namespace \
+  --set global.environment=production
+
+# 3. Access the application
+kubectl port-forward svc/gateway-service 8222:8222 -n microservices
+
+# 4. Monitor deployment
+kubectl get all -n microservices
+kubectl logs -f deployment/gateway-service -n microservices</code>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5><i class="fas fa-cubes"></i> Microservices Learning Platform</h5>
+                    <p>Master microservices architecture through hands-on learning with a complete e-commerce implementation.</p>
+                    
+                    <!-- GitHub Repository Link -->
+                    <div class="github-footer-info">
+                        <a href="https://github.com/PramithaMJ/fully-completed-microservices" target="_blank" class="btn btn-outline-light btn-sm mb-2">
+                            <i class="fab fa-github"></i> View on GitHub
+                        </a>
+                        <br>
+                        <small class="text-muted">
+                            Created with ❤️ by <a href="https://pramithamj.live" target="_blank" class="text-info">Pramitha Jayasooriya</a>
+                        </small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h6>Technologies Used</h6>
+                    <div class="tech-stack">
+                        <span class="badge bg-primary">Spring Boot</span>
+                        <span class="badge bg-primary">Spring Cloud</span>
+                        <span class="badge bg-success">PostgreSQL</span>
+                        <span class="badge bg-success">MongoDB</span>
+                        <span class="badge bg-warning">Apache Kafka</span>
+                        <span class="badge bg-info">Docker</span>
+                        <span class="badge bg-secondary">Zipkin</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h6>Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="https://github.com/PramithaMJ/fully-completed-microservices" target="_blank" class="text-light"><i class="fab fa-github"></i> Source Code</a></li>
+                        <li><a href="https://pramithamj.live" target="_blank" class="text-light"><i class="fas fa-globe"></i> Author's Website</a></li>
+                        <li><a href="https://buymeacoffee.com/lpramithamm" target="_blank" class="text-light"><i class="fas fa-coffee"></i> Buy Me a Coffee</a></li>
+                        <li><a href="http://localhost:8761" target="_blank" class="text-light"><i class="fas fa-search"></i> Eureka Dashboard</a></li>
+                        <li><a href="http://localhost:9411" target="_blank" class="text-light"><i class="fas fa-route"></i> Zipkin Tracing</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p>&copy; 2025 Microservices Learning Platform. Built for educational purposes.</p>
+                <p class="mb-0">
+                    <a href="https://github.com/PramithaMJ/fully-completed-microservices/blob/main/LICENSE" target="_blank" class="text-muted">MIT License</a> | 
+                    <a href="https://github.com/PramithaMJ/fully-completed-microservices/issues" target="_blank" class="text-muted">Report Issues</a> | 
+                    <a href="https://github.com/PramithaMJ/fully-completed-microservices/fork" target="_blank" class="text-muted">Fork Repository</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Service Detail Modal -->
+    <div class="modal fade" id="serviceModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="serviceModalTitle">Service Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="serviceModalBody">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+{{- if .Values.configServer.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.configServer.name }}-config
+  labels:
+    {{- include "ecommerce.labels" . | nindent 4 }}
+    app.kubernetes.io/component: {{ .Values.configServer.name }}
+data:
+  application.yml: |
+    server:
+      port: 8888
+    
+    spring:
+      application:
+        name: config-server
+      profiles:
+        active: kubernetes
+      cloud:
+        config:
+          server:
+            git:
+              uri: https://github.com/PramithaMJ/microservices-config
+              clone-on-start: true
+              default-label: main
+            health:
+              repositories:
+                microservices-config:
+                  label: main
+                  name: microservices-config
+                  profiles: default
+    
+    eureka:
+      client:
+        service-url:
+          defaultZone: http://{{ include "ecommerce.serviceName" (dict "serviceName" "discovery-service" "Values" .Values) }}:8761/eureka
+        register-with-eureka: true
+        fetch-registry: true
+      instance:
+        prefer-ip-address: true
+        hostname: {{ .Values.configServer.name }}
+    
+    management:
+      endpoints:
+        web:
+          exposure:
+            include: "*"
+      endpoint:
+        health:
+          show-details: always
+      health:
+        livenessstate:
+          enabled: true
+        readinessstate:
+          enabled: true
+
+  bootstrap.yml: |
+    spring:
+      application:
+        name: config-server
+      profiles:
+        active: kubernetes
+{{- end }}

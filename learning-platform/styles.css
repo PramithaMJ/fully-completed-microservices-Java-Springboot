@@ -1,0 +1,1172 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 80px;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin: 2rem 0;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffd700;
+}
+
+.stat p {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* GitHub Integration Styles */
+.hero-buttons {
+    margin: 2rem 0;
+}
+
+.github-info {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin: 2rem auto;
+    max-width: 600px;
+}
+
+.repo-stats {
+    text-align: center;
+}
+
+.repo-link {
+    color: #ffd700;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.repo-link:hover {
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+.repo-link i {
+    margin-right: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.author-info {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+}
+
+.author-link {
+    color: #e2e8f0;
+    text-decoration: none;
+    margin-left: 1rem;
+    transition: color 0.3s ease;
+}
+
+.author-link:hover {
+    color: #ffd700;
+}
+
+.author-link i {
+    margin-right: 0.25rem;
+}
+
+/* GitHub Clone Section */
+.github-clone-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px;
+    padding: 2rem;
+    color: white;
+    border: none !important;
+}
+
+.github-clone-section .alert-info {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.github-clone-section h5 {
+    color: #ffd700;
+    margin-bottom: 1rem;
+}
+
+.github-clone-section .code-block {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.github-clone-section .text-primary {
+    color: #ffd700 !important;
+}
+
+/* Sections */
+.section {
+    padding: 80px 0;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    color: #2c3e50;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    margin: 1rem auto;
+}
+
+/* Business Problem & Solution */
+.business-problem, .business-solution {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    height: 100%;
+}
+
+.business-problem {
+    border-left: 5px solid #e74c3c;
+}
+
+.business-solution {
+    border-left: 5px solid #27ae60;
+}
+
+.problem-list, .solution-list {
+    list-style: none;
+    padding: 0;
+}
+
+.problem-list li, .solution-list li {
+    padding: 0.5rem 0;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.problem-list li::before {
+    content: '⚠️';
+    position: absolute;
+    left: 0;
+}
+
+.solution-list li::before {
+    content: '✅';
+    position: absolute;
+    left: 0;
+}
+
+/* Architecture Diagram */
+.architecture-diagram {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 15px;
+    margin: 2rem 0;
+}
+
+.service-layer {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.service-layer h4 {
+    margin-bottom: 1rem;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.service-box {
+    display: inline-block;
+    background: white;
+    padding: 1.5rem;
+    margin: 0.5rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 150px;
+    position: relative;
+}
+
+.service-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.service-box i {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.service-box span {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.service-box small {
+    color: #666;
+    font-size: 0.85rem;
+}
+
+/* Service Box Colors */
+.client-box { border-top: 4px solid #3498db; }
+.client-box i { color: #3498db; }
+
+.gateway-box { border-top: 4px solid #27ae60; }
+.gateway-box i { color: #27ae60; }
+
+.config-box { border-top: 4px solid #f39c12; }
+.config-box i { color: #f39c12; }
+
+.discovery-box { border-top: 4px solid #17a2b8; }
+.discovery-box i { color: #17a2b8; }
+
+.business-box { border-top: 4px solid #6f42c1; }
+.business-box i { color: #6f42c1; }
+
+.infra-box { border-top: 4px solid #dc3545; }
+.infra-box i { color: #dc3545; }
+
+.infrastructure-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.infra-box {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    min-width: 120px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+/* Service Detail Tabs */
+.nav-pills .nav-link {
+    color: #6c757d;
+    background: transparent;
+    border: 2px solid #dee2e6;
+    margin: 0 0.25rem;
+    border-radius: 25px;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.nav-pills .nav-link:hover {
+    background: #f8f9fa;
+    color: #495057;
+}
+
+.nav-pills .nav-link.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: transparent;
+}
+
+/* Service Detail Cards */
+.service-detail {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    margin-top: 2rem;
+}
+
+.service-info {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-left: 5px solid #667eea;
+}
+
+.service-info h4 {
+    margin-bottom: 1rem;
+}
+
+.service-info p {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.service-description h5 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.service-description h6 {
+    color: #495057;
+    margin: 1.5rem 0 0.5rem 0;
+    font-weight: 600;
+}
+
+/* API Endpoints */
+.api-endpoints {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+.endpoint {
+    display: flex;
+    align-items: center;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    background: white;
+    border-radius: 5px;
+}
+
+.method {
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-right: 1rem;
+    min-width: 60px;
+    text-align: center;
+}
+
+.method.get { background: #28a745; }
+.method.post { background: #007bff; }
+.method.put { background: #ffc107; color: #333; }
+.method.delete { background: #dc3545; }
+
+.code-example {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 1.5rem;
+    border-left: 4px solid #007bff;
+}
+
+.code-example h6 {
+    color: #495057;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.code-block {
+    background: #2d3748;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+}
+
+.code-block code {
+    color: #e2e8f0;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    line-height: 1.8;
+    font-size: 0.9rem;
+}
+
+/* Design Patterns */
+.pattern-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.pattern-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    border-top: 5px solid #667eea;
+}
+
+.pattern-card:hover {
+    transform: translateY(-5px);
+}
+
+.pattern-icon {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.pattern-icon i {
+    font-size: 3rem;
+    color: #667eea;
+}
+
+.pattern-card h4 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.pattern-benefits h6 {
+    color: #495057;
+    margin: 1rem 0 0.5rem 0;
+}
+
+.pattern-benefits ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.pattern-benefits li {
+    padding: 0.25rem 0;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.pattern-benefits li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #667eea;
+    font-weight: bold;
+}
+
+/* Hands-On Section */
+.setup-steps {
+    margin: 2rem 0;
+}
+
+.step {
+    display: flex;
+    align-items: flex-start;
+    margin: 2rem 0;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+}
+
+.step-number {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 1.5rem;
+    flex-shrink: 0;
+}
+
+.step-content {
+    flex: 1;
+}
+
+.step-content h5 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.code-block {
+    background: #2d3748;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+}
+
+.service-startup {
+    margin: 1rem 0;
+}
+
+.startup-order {
+    display: flex;
+    align-items: center;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    background: #f8f9fa;
+    border-radius: 5px;
+}
+
+.order-number {
+    background: #667eea;
+    color: white;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-right: 1rem;
+}
+
+/* Testing Scenarios */
+.scenario-content {
+    padding: 1.5rem;
+}
+
+.curl-example {
+    margin: 1rem 0;
+}
+
+.curl-example pre {
+    background: #2d3748;
+    color: #e2e8f0;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    overflow-x: auto;
+}
+
+.expected-result {
+    background: #e8f5e8;
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 5px solid #28a745;
+    margin: 1rem 0;
+}
+
+.trace-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+}
+
+.trace-step {
+    background: #667eea;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    margin: 0.25rem;
+    font-size: 0.9rem;
+}
+
+.trace-arrow {
+    color: #667eea;
+    font-size: 1.5rem;
+    margin: 0 0.5rem;
+}
+
+/* Monitoring Dashboards */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.dashboard-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    text-align: center;
+    border-top: 4px solid #667eea;
+}
+
+.dashboard-card h5 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.dashboard-card p {
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+/* Footer */
+.footer {
+    background: #2c3e50 !important;
+}
+
+.tech-stack {
+    margin-top: 0.5rem;
+}
+
+.tech-stack .badge {
+    margin: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+}
+
+/* Kubernetes Deployment Section Styles */
+.deployment-feature {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    height: 100%;
+    border-left: 4px solid #007bff;
+}
+
+.deployment-feature:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+.feature-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.feature-icon i {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+}
+
+.feature-list li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.feature-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #28a745;
+    font-weight: bold;
+}
+
+/* Helm Section Styles */
+.helm-section {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 2rem;
+}
+
+.helm-features h6 {
+    color: #495057;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.helm-features ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.helm-features li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: #6c757d;
+}
+
+.helm-features li::before {
+    content: '⚡';
+    position: absolute;
+    left: 0;
+    color: #007bff;
+}
+
+/* Blue-Green Deployment Flow */
+.deployment-flow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.deployment-step {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    border-top: 4px solid transparent;
+}
+
+.deployment-step:nth-child(1) { border-top-color: #007bff; }
+.deployment-step:nth-child(2) { border-top-color: #28a745; }
+.deployment-step:nth-child(3) { border-top-color: #ffc107; }
+.deployment-step:nth-child(4) { border-top-color: #dc3545; }
+
+.deployment-step:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem auto;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.code-snippet {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 0.75rem;
+    margin-top: 1rem;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+.code-snippet code {
+    color: #e83e8c;
+    font-size: 0.9rem;
+}
+
+/* Kubernetes Features Grid */
+.k8s-features {
+    margin: 2rem 0;
+}
+
+.feature-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    height: 100%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    border-bottom: 4px solid #007bff;
+}
+
+.feature-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.feature-card h5 {
+    color: #495057;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.feature-card h5 i {
+    color: #007bff;
+}
+
+.feature-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.feature-card li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: #6c757d;
+}
+
+.feature-card li::before {
+    content: '▶';
+    position: absolute;
+    left: 0;
+    color: #007bff;
+    font-size: 0.8rem;
+}
+
+/* Quick Start Kubernetes Section */
+.quick-start-k8s {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    border-radius: 15px;
+    padding: 2rem;
+    color: white;
+    margin: 2rem 0;
+}
+
+.quick-start-k8s h3 {
+    color: white;
+    margin-bottom: 1.5rem;
+}
+
+.quick-start-k8s .alert-info {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.quick-start-k8s .code-block {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+}
+
+.quick-start-k8s .code-block code {
+    color: #fff;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    line-height: 1.8;
+}
+
+/* Enhanced Pattern Cards for Circuit Breakers and Saga */
+.pattern-card .implementation-details {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #dee2e6;
+}
+
+.pattern-card .implementation-details h6 {
+    color: #495057;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pattern-card .implementation-details h6::before {
+    content: '⚙️';
+    font-size: 1rem;
+}
+
+.pattern-card .implementation-details ul {
+    list-style: none;
+    padding: 0;
+}
+
+.pattern-card .implementation-details li {
+    padding: 0.25rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.pattern-card .implementation-details li::before {
+    content: '🔧';
+    position: absolute;
+    left: 0;
+    font-size: 0.8rem;
+}
+
+.pattern-card .implementation-details ol {
+    padding-left: 1rem;
+}
+
+.pattern-card .implementation-details ol li {
+    padding-left: 0.5rem;
+    list-style: decimal;
+}
+
+.pattern-card .implementation-details ol li::before {
+    content: '';
+}
+
+/* Circuit Breaker Specific Styling */
+.pattern-card:has(.fa-plug-circle-xmark) {
+    border-left: 4px solid #dc3545;
+}
+
+.pattern-card:has(.fa-plug-circle-xmark) .pattern-icon {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+}
+
+/* Saga Pattern Specific Styling */
+.pattern-card:has(.fa-project-diagram) {
+    border-left: 4px solid #6f42c1;
+}
+
+.pattern-card:has(.fa-project-diagram) .pattern-icon {
+    background: linear-gradient(135deg, #6f42c1, #5a32a3);
+}
+
+/* Responsive Design for Deployment Section */
+@media (max-width: 768px) {
+    .deployment-flow {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .hero-stats .stat {
+        margin-bottom: 1rem;
+    }
+    
+    .feature-card {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Animation for Circuit Breaker Icons */
+.pattern-card .fa-plug-circle-xmark {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Animation for Saga Flow Icons */
+.pattern-card .fa-project-diagram {
+    animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Enhanced Code Blocks */
+.code-example {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 1.5rem;
+    border-left: 4px solid #007bff;
+}
+
+.code-example h6 {
+    color: #495057;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.code-block {
+    background: #2d3748;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+}
+
+.code-block code {
+    color: #e2e8f0;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    line-height: 1.8;
+    font-size: 0.9rem;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.service-box, .pattern-card, .step, .dashboard-card {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #5a67d8;
+}
+
+/* Loading Animation */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* GitHub Repository Section */
+.bg-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+.github-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.github-card:hover {
+    transform: translateY(-5px);
+}
+
+.github-card-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.github-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    color: #ffd700;
+}
+
+.github-card-header h4 {
+    color: white;
+    margin: 0;
+}
+
+.github-card-body {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.github-card-body h5 {
+    color: white;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.github-card-body p {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 1rem;
+}
+
+.github-stats {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.github-card-footer .btn-light {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.github-card-footer .btn-light:hover {
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.repo-features {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 2rem 0;
+}
+
+.repo-features ul li {
+    padding: 0.5rem 0;
+    font-size: 1rem;
+}
+
+.quick-actions {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 2rem;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.action-buttons .btn {
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.action-buttons .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.action-buttons .btn-warning {
+    background: #ffd700;
+    border-color: #ffd700;
+    color: #333;
+}
+
+.action-buttons .btn-warning:hover {
+    background: #ffed4e;
+    border-color: #ffed4e;
+}
